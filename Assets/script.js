@@ -1,8 +1,10 @@
 $(document).ready(function() {
     console.log("Hello World!");
 
+// Variable for NeoWs URL with API key.
 var apiNeoWsURL = "https://api.nasa.gov/neo/rest/v1/feed/today?detailed=true&api_key=Bgi1uiAMfef2QgydlF1ezKjCgeb3OdGfrj7B87wv";
-
+// this function calls the AJAX pull for NeoWs object.
+function asteroidNeoWs(){
 $.ajax({
     url: apiNeoWsURL,
     method: "GET"
@@ -14,5 +16,6 @@ $.ajax({
         console.log(jplURL)
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
     });
-    
+}
+asteroidNeoWs();
 });
