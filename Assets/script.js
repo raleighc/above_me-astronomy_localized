@@ -15,8 +15,13 @@ $(document).ready(function () {
 
   $.ajax(settings).done(function (response) {
     console.log(response);
-    var name = response[0].name;
-    console.log(name);
+    // grab the satellites name
+    var satName = response[0].name;
+    console.log(satName);
+    // grab the related satellites number 
+    var satNumber = response[0].number;
+    console.log(satNumber);
+    
   });
 
 });
