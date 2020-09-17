@@ -13,9 +13,21 @@ $(document).ready(function () {
 getLocation();
   function showPosition(position) {
     // Grab coordinates from the given object
-    var lat = position.coords.latitude;
-    var lon = position.coords.longitude;
+    var lat = position.coords.latitude.toFixed(4);
+    var lon = position.coords.longitude.toFixed(4);
     console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
+    // this function launches the sky-map window of the stars relevant to users current location.
+    function skyMap (){
+      var skyMapURL =
+        "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=10&ra=" + lon + "&de=" + lat;
+    
+      var skyIframe = $("<iframe>").attr("src", skyMapURL)
+    skyIframe.attr("width", 400);
+    skyIframe.attr("height", 300);
+      $(".container").append(skyIframe);
+      
+    }
+    skyMap();
   }
 
 
@@ -85,4 +97,6 @@ getLocation();
       });
   }
   nasaPicOfDay();
+
+  
 });
