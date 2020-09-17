@@ -6,10 +6,12 @@ $(document).ready(function () {
   var resultPage = $("#result-page");
   var dayTimeHeader = $("#date-time-header");
   var startBtn = $("#start-btn");
+  //create an onclick function for the start-button
   $("#start-btn").click(function () {
     console.log("You clicked me!");
+    // show the result page and hide the starting page 
     startingPage.attr("style", "display: none");
-    resultPage.attr("style", "display: block");
+    resultPage.attr("style", "display: inline");
   });
 
   // api link to the top list of satellites from uphere.space
