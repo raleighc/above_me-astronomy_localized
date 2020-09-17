@@ -1,37 +1,54 @@
 $(document).ready(function () {
   //   console.log("Hello World!");
-
-  // grab and connect html elements
-var dayTimeHeader = $("#date-time-header");
-var startBtn = $("#start-btn");
-$("#start-btn").click(function(){
-    console.log("You clicked me!");
-})
-
-  // api link to the top list of satellites from uphere.space
-  function upHereSpace(){
-  var settings = {
-    async: true,
-    crossDomain: true,
-    url: "https://uphere-space1.p.rapidapi.com/satellite/top?days=1",
-    method: "GET",
-    headers: {
-      "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
-      "x-rapidapi-key": "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
-    },
-  };
-
-  $.ajax(settings).done(function (response) {
-    // console.log(response);
-    // grab the satellites name
-    var satName = response[0].name;
-    // console.log(satName);
-    // grab the related satellites number
-    var satNumber = response[0].number;
-    // console.log(satNumber);
-  });
+  // console.log(window);
+  // this function retrieves the users location from their browser window.
+  function getLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition);
+      // console.log(showPosition);
+    } else {
+      alert("This site requires geolocation to be shared.");
+    }
+  }
+getLocation();
+  function showPosition(position) {
+    // Grab coordinates from the given object
+    var lat = position.coords.latitude;
+    var lon = position.coords.longitude;
+    console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
   }
 
+
+  // grab and connect html elements
+  var dayTimeHeader = $("#date-time-header");
+  var startBtn = $("#start-btn");
+  $("#start-btn").click(function () {
+    // console.log("You clicked me!");
+  });
+
+  // api link to the top list of satellites from uphere.space
+  function upHereSpace() {
+    var settings = {
+      async: true,
+      crossDomain: true,
+      url: "https://uphere-space1.p.rapidapi.com/satellite/top?days=1",
+      method: "GET",
+      headers: {
+        "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
+        "x-rapidapi-key": "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
+      },
+    };
+
+    $.ajax(settings).done(function (response) {
+      // console.log(response);
+      // grab the satellites name
+      var satName = response[0].name;
+      // console.log(satName);
+      // grab the related satellites number
+      var satNumber = response[0].number;
+      // console.log(satNumber);
+    });
+  }
 
   // Variable for NeoWs URL with API key.
 
@@ -45,13 +62,13 @@ $("#start-btn").click(function(){
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         var jplURL = response.near_earth_objects["2020-09-17"][0].nasa_jpl_url;
-        console.log(jplURL);
+
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
       });
   }
-  asteroidNeoWs();
+  // asteroidNeoWs();
 
   function nasaPicOfDay() {
     var astroPicURL =
