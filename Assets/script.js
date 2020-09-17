@@ -3,7 +3,6 @@ $(document).ready(function() {
 
 // grab and connect html elements
 var dayTimeHeader = $("#date-time-header");
-console.log(dayTimeHeader);
 var startBtn = $("#start-btn");
 $("#start-btn").click(function(){
     console.log("You clicked me!");
