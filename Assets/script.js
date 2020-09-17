@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 $(document).ready(function() {
     console.log("Hello World!");
 
@@ -19,8 +18,7 @@ $.ajax({
     });
 }
 asteroidNeoWs();
-=======
-$(document).ready(function () {
+
   console.log("Hello World!");
 
   // api link to the top list of satellites from uphere.space 
@@ -46,5 +44,4 @@ $(document).ready(function () {
     
   });
 
->>>>>>> 973edfa94840b14570d93879f257d3bbb69459f4
 });
