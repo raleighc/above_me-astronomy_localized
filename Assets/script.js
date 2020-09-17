@@ -1,7 +1,15 @@
 $(document).ready(function () {
   //   console.log("Hello World!");
 
+  // grab and connect html elements
+var dayTimeHeader = $("#date-time-header");
+var startBtn = $("#start-btn");
+$("#start-btn").click(function(){
+    console.log("You clicked me!");
+})
+
   // api link to the top list of satellites from uphere.space
+  function upHereSpace(){
   var settings = {
     async: true,
     crossDomain: true,
@@ -22,6 +30,8 @@ $(document).ready(function () {
     var satNumber = response[0].number;
     // console.log(satNumber);
   });
+  }
+
 
   // Variable for NeoWs URL with API key.
 
