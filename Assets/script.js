@@ -42,12 +42,10 @@ $.ajax(settings).done(function (response) {
     var satNumber = response[0].number
     console.log("Satellite number: " + satNumber);
     });
-
+    
 });
 }
   upHereSpace();
-
-  
 
   // Variable for NeoWs URL with API key.
 
