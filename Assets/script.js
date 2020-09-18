@@ -1,4 +1,56 @@
 $(document).ready(function () {
+  var currentTime = moment().format("YYYY-MM-DDThh:mm:ss" + "+00:00");
+  console.log(currentTime);
+
+  $(window).on("load", function () {
+    $(".background1").addClass("fadein");
+    $(".background2").addClass("fadein");
+  });
+
+  $("#starBtn").on("click", function () {
+    $("#starInfo").html("");
+    $("#galaxyInfo").html("");
+    var jumboStar = $("<div>").addClass("jumbotron jumbotron-fluid");
+    var starContainer = $("<div>").addClass("container");
+    var starTitle = $("<h1>").addClass("display-4").text("Today's Star");
+    var starText = $("<p>").addClass("lead").text("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam non consectetur esse dolores temporibus corporis, voluptate quo aut. Possimus excepturi neque nisi officiis laboriosam, at consectetur vitae quis commodi tenetur.");
+    
+    starContainer.append(starTitle, starText)
+    jumboStar.append(starContainer);
+    $("#starInfo").append(jumboStar);
+
+    function skyMap() {
+      var skyMapURL =
+        "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=10&ra=" +
+        lon +
+        "&de=" +
+        lat;
+
+      var skyIframe = $("<iframe>").attr("src", skyMapURL);
+      skyIframe.attr("width", 400);
+      skyIframe.attr("height", 300);
+      jumboGalaxy.append(skyIframe);
+    }
+    skyMap();
+
+  });
+
+  $("#galaxyBtn").on("click", function () {
+    console.log("GALAXY!!!!!")
+    $("#galaxyInfo").html("");
+    $("#starInfo").html("");
+    var jumboGalaxy = $("<div>").addClass("jumbotron jumbotron-fluid");
+    var galaxyContainer = $("<div>").addClass("container");
+    var galaxyTitle = $("<h1>").addClass("display-4").text("Today's Galaxy");
+    var galaxyText = $("<p>").addClass("lead").text("Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam non consectetur esse dolores temporibus corporis, voluptate quo aut. Possimus excepturi neque nisi officiis laboriosam, at consectetur vitae quis commodi tenetur.");
+    
+    galaxyContainer.append(galaxyTitle, galaxyText)
+    jumboGalaxy.append(galaxyContainer);
+    $("#galaxyInfo").append(jumboGalaxy);
+  });
+
+  console.log("Hello World!");
+  // console.log(window);
   // grab and connect html elements
   var startingPage = $("#starting-page");
   var resultPage = $("#result-page");
@@ -31,9 +83,8 @@ $(document).ready(function () {
     // Grab coordinates from the given object
     var lat = position.coords.latitude.toFixed(4);
     var lon = position.coords.longitude.toFixed(4);
-    console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
-
-    sunriseSunset();
+    // console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
+  
     // this function launches the sky-map window of the stars relevant to users current location.
 
     function sunriseSunset() {
@@ -43,16 +94,27 @@ $(document).ready(function () {
         "&lng=" +
         lon +
         "&formatted=0";
-      console.log(sunriseURL);
+     
       $.ajax({
         url: sunriseURL,
         method: "GET",
       }).then(function (response) {
         var sunRise = response.results.sunrise;
+        var currentSunRise = new Date(sunRise);
         var sunSet = response.results.sunset;
-        console.log(response);
+        var currentSunSet = new Date(sunSet);
+        var now = new Date()
+        console.log(now);
+        console.log(currentSunRise);
+        if (now > currentSunRise && now < currentSunSet) {
+          $("#start-btn").attr("href", "./sunrise.html");
+        } else {
+          $("#start-btn").attr("href", "./sunset.html");
+        }
       });
     }
+  }
+    sunriseSunset();
       // api link to the top list of satellites from uphere.space
       function upHereSpace() {
         // grab the users current longitude and latitude coordinates
@@ -94,23 +156,7 @@ $(document).ready(function () {
         });
       }
       upHereSpace();
-    
-
-    function skyMap() {
-      var skyMapURL =
-        "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=10&ra=" +
-        lon +
-        "&de=" +
-        lat;
-
-      var skyIframe = $("<iframe>").attr("src", skyMapURL);
-      skyIframe.attr("width", 400);
-      skyIframe.attr("height", 300);
-      $(".container").append(skyIframe);
-    }
-    // skyMap();
-  }
-
+      
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -123,7 +169,7 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         var jplURL = response.near_earth_objects["2020-09-18"][0].nasa_jpl_url;
         console.log("NASA url: " + jplURL);
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
@@ -157,4 +203,6 @@ $(document).ready(function () {
       });
   }
   nasaPicOfDay();
+
+  
 });

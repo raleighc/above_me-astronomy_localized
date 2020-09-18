@@ -1,47 +1,47 @@
-/* .background1 {
-    position: relative;
-    background: url(./images/black_and_white_space.png) center;
-    background-size: cover;
-    width: 100%;
-    height: 100vh;
-  }
-
-  .background1:before {
-    content: "";
-    width: 100%;
-    height: 100vh !important;
-    position: absolute;
-    background:
-    url(./images/smokey-fall-smoke-sunset.jpg);
-    background-position: center;
-    background-size: cover;
-    opacity: 0;
-    transition: opacity 5s;
-  }
-  
-  .background1.fadein:before {
-    opacity: 1;
-  }
-  .background2:before {
-    content: "";
-    width: 100%;
-    height: 100vh !important;
-    position: absolute;
-    background:
-    url(./images/stars_gradient.jpg);
-    background-position: center;
-    background-size: cover;
-    opacity: 0;
-    transition: opacity 5s;
-  }
-  
-  .background2.fadein:before {
-    opacity: 1;
-  } */
-#result-page{
-    /* display: none; */
+.background,
+.background1,
+.background2 {
+  position: relative;
+  background: url(./images/black_and_white_space.png) center;
+  background-size: cover;
+  width: 100%;
+  height: 100vh;
 }
 
-#starting-page{
-    display: block;
+.background1:before {
+  content: "";
+  width: 100%;
+  height: 100vh !important;
+  position: absolute;
+  background: url(./images/smokey-fall-smoke-sunset.jpg);
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 5s;
+}
+
+.background1.fadein:before {
+  opacity: 1;
+}
+.background2:before {
+  content: "";
+  width: 100%;
+  height: 100vh !important;
+  position: absolute;
+  background: url(./images/stars_gradient.jpg);
+  background-position: center;
+  background-size: cover;
+  opacity: 0;
+  transition: opacity 5s;
+} 
+
+.background2.fadein:before {
+  opacity: 1;
+}
+#result-page {
+  /* display: none; */
+}
+
+#starting-page {
+  display: block;
 }
