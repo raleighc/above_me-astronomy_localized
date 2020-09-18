@@ -31,8 +31,11 @@
     <main class="container">
       <div class="row" id="result-page">
         <div class="col-md-6">
-            <div class="card float-left" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
+                    <div class="spinner-border" id="satellite" role="status">
+                        <span class="sr-only">Loading...</span>
+                      </div>
                   <h5 class="cardOne-title"></h5>
                   <p class="cardOne-text"></p>
                   <a href="#" class="btn btn-primary">Go somewhere</a>
@@ -40,10 +43,12 @@
               </div>
         </div>
         <div class="col-md-6">
-            <div class="card float-right" style="width: 18rem;">
+            <div class="card" style="width: 18rem;">
                 <div class="card-body">
+                    
                   <h5 class="cardTwo-title"></h5>
                   <p class="cardTwo-text"></p>
+                  <p id="asteroid-link"></p>
                   <a href="#" class="btn btn-primary">Go somewhere</a>
                 </div>
               </div>

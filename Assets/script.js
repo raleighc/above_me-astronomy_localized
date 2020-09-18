@@ -52,13 +52,13 @@ $(document).ready(function () {
         var sunSet = response.results.sunset;
         console.log(response);
       });
-
+    }
       // api link to the top list of satellites from uphere.space
       function upHereSpace() {
         // grab the users current longitude and latitude coordinates
         navigator.geolocation.getCurrentPosition(function (position) {
-          console.log("latitude coordinate: " + position.coords.latitude);
-          console.log("longitude coordinate: " + position.coords.longitude);
+        //   console.log("latitude coordinate: " + position.coords.latitude);
+        //   console.log("longitude coordinate: " + position.coords.longitude);
           var userLat = position.coords.latitude;
           var userLng = position.coords.longitude;
 
@@ -87,12 +87,14 @@ $(document).ready(function () {
 
             // dynamically populate the sunrise html page with response information
             $(".cardOne-title").text("Satellite: " + satName);
+            $("#satellite").addClass("d-none");
             $(".cardOne-text").text("Number: " + satNumber);
           });
+          
         });
       }
       upHereSpace();
-    }
+    
 
     function skyMap() {
       var skyMapURL =
@@ -126,12 +128,16 @@ $(document).ready(function () {
         console.log("NASA url: " + jplURL);
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects["2020-09-18"][0].name;
-        console.log("Asteroid name: " + asteroidObjName);
+        // console.log("Asteroid name: " + asteroidObjName);
         var asteroidIdNumber = response.near_earth_objects["2020-09-18"][0].id;
-        console.log("ID number: " + asteroidIdNumber);
+        // console.log("ID number: " + asteroidIdNumber);
         // dynamically populate the second button option
         $(".cardTwo-title").text("Asteroid name: " + asteroidObjName);
         $(".cardTwo-text").text(("ID number: " + asteroidIdNumber));
+        var astLink = $("<a>");
+        astLink.attr("href", jplURL);
+        astLink.text("NASA Link");
+        $("#asteroid-link").append(astLink);
       });
   }
   asteroidNeoWs();
