@@ -15,28 +15,39 @@ $(document).ready(function() {
   });
 
   // api link to the top list of satellites from uphere.space
-  function upHereSpace() {
-    var settings = {
-      async: true,
-      crossDomain: true,
-      url: "https://uphere-space1.p.rapidapi.com/satellite/top?days=1",
-      method: "GET",
-      headers: {
-        "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
-        "x-rapidapi-key": "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
-      },
-    };
+  function upHereSpace(){
 
-    $.ajax(settings).done(function (response) {
-      // console.log(response);
-      // grab the satellites name
-      var satName = response[0].name;
-      // console.log(satName);
-      // grab the related satellites number
-      var satNumber = response[0].number;
-      // console.log(satNumber);
+// grab the users current longitude and latitude coordinates 
+ navigator.geolocation.getCurrentPosition(function(position){
+     console.log("latitude coordinate: " + position.coords.latitude);
+     console.log("longitude coordinate: " + position.coords.longitude);
+     var userLat = position.coords.latitude
+     var userLng = position.coords.longitude
+
+  var settings = {
+	"async": true,
+	"crossDomain": true,
+	"url": "https://uphere-space1.p.rapidapi.com/user/visible?lat=" + userLat + "&lng=" + userLng, 
+	"method": "GET",
+	"headers": {
+		"x-rapidapi-host": "uphere-space1.p.rapidapi.com",
+		"x-rapidapi-key": "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19"
+	}
+}
+
+$.ajax(settings).done(function (response) {
+	console.log(response);
+    var satName = response[0].name
+    console.log("Satellite name: " + satName);
+    var satNumber = response[0].number
+    console.log("Satellite number: " + satNumber);
     });
-  }
+
+});
+}
+  upHereSpace();
+
+  
 
   // Variable for NeoWs URL with API key.
 
