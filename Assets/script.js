@@ -1,11 +1,9 @@
 $(document).ready(function () {
-  $(window).on("load", function () {
-    $(".background1").addClass("fadein");
-  });
+  // $(window).on("load", function () {
+  //   $(".background1").addClass("fadein");
+  // });
   console.log("Hello World!");
   console.log(window);
-
-  
   
   // this function retrieves the users location from their browser window.
   function getLocation() {
