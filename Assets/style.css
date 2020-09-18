@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 /* .background1 {
     position: relative;
     background: url(./images/black_and_white_space.png) center;
@@ -38,3 +39,12 @@
   .background2.fadein:before {
     opacity: 1;
   } */
+=======
+#result-page{
+    display: none;
+}
+
+#starting-page{
+    display: block;
+}
+>>>>>>> master
