@@ -39,7 +39,7 @@
   opacity: 1;
 }
 #result-page {
-  display: none;
+  /* display: none; */
 }
 
 #starting-page {

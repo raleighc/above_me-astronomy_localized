@@ -51,6 +51,23 @@ $(document).ready(function () {
 
   console.log("Hello World!");
   // console.log(window);
+  // grab and connect html elements
+  var startingPage = $("#starting-page");
+  var resultPage = $("#result-page");
+  var dayTimeHeader = $("#date-time-header");
+  var startBtn = $("#start-btn");
+  //create an onclick function for the start-button
+  $("#start-btn").on("submit", function () {
+    console.log("You clicked me!");
+    // show the result page and hide the starting page
+    // startingPage.attr("style", "display: none");
+    // resultPage.attr("style", "display: inline");
+  });
+  // $(window).on("load", function () {
+  //   $(".background1").addClass("fadein");
+  // });
+  console.log("Hello World!");
+  console.log(window);
 
   // this function retrieves the users location from their browser window.
   function getLocation() {
@@ -84,14 +101,10 @@ $(document).ready(function () {
       }).then(function (response) {
         var sunRise = response.results.sunrise;
         var currentSunRise = new Date(sunRise);
-        
-    
         var sunSet = response.results.sunset;
         var currentSunSet = new Date(sunSet);
         var now = new Date()
-        // var nowPlus12 = now.setHours(now.getHours() + 12);
         console.log(now);
-        // console.log(new Date(nowPlus12).toLocaleString());
         console.log(currentSunRise);
         if (now > currentSunRise && now < currentSunSet) {
           $("#start-btn").attr("href", "./sunrise.html");
@@ -100,26 +113,14 @@ $(document).ready(function () {
         }
       });
     }
+  }
     sunriseSunset();
-      // grab and connect html elements
-      var startingPage = $("#starting-page");
-      var resultPage = $("#result-page");
-      var dayTimeHeader = $("#date-time-header");
-      var startBtn = $("#start-btn");
-      //create an onclick function for the start-button
-      $("#start-btn").click(function () {
-        // console.log("You clicked me!");
-        // show the result page and hide the starting page
-        startingPage.attr("style", "display: none");
-        resultPage.attr("style", "display: inline");
-      });
-
       // api link to the top list of satellites from uphere.space
       function upHereSpace() {
         // grab the users current longitude and latitude coordinates
         navigator.geolocation.getCurrentPosition(function (position) {
-          // console.log("latitude coordinate: " + position.coords.latitude);
-          // console.log("longitude coordinate: " + position.coords.longitude);
+        //   console.log("latitude coordinate: " + position.coords.latitude);
+        //   console.log("longitude coordinate: " + position.coords.longitude);
           var userLat = position.coords.latitude;
           var userLng = position.coords.longitude;
 
@@ -140,19 +141,22 @@ $(document).ready(function () {
           };
 
           $.ajax(settings).done(function (response) {
-            // console.log(response);
+            console.log(response);
             var satName = response[0].name;
             // console.log("Satellite name: " + satName);
             var satNumber = response[0].number;
             // console.log("Satellite number: " + satNumber);
+
+            // dynamically populate the sunrise html page with response information
+            $(".cardOne-title").text("Satellite: " + satName);
+            $("#satellite").addClass("d-none");
+            $(".cardOne-text").text("Number: " + satNumber);
           });
+          
         });
       }
       upHereSpace();
-    }
-  
-    
-
+      
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -167,8 +171,19 @@ $(document).ready(function () {
       .then(function (response) {
         // console.log(response);
         var jplURL = response.near_earth_objects["2020-09-18"][0].nasa_jpl_url;
-        // console.log(jplURL);
+        console.log("NASA url: " + jplURL);
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
+        var asteroidObjName = response.near_earth_objects["2020-09-18"][0].name;
+        // console.log("Asteroid name: " + asteroidObjName);
+        var asteroidIdNumber = response.near_earth_objects["2020-09-18"][0].id;
+        // console.log("ID number: " + asteroidIdNumber);
+        // dynamically populate the second button option
+        $(".cardTwo-title").text("Asteroid name: " + asteroidObjName);
+        $(".cardTwo-text").text(("ID number: " + asteroidIdNumber));
+        var astLink = $("<a>");
+        astLink.attr("href", jplURL);
+        astLink.text("NASA Link");
+        $("#asteroid-link").append(astLink);
       });
   }
   asteroidNeoWs();
