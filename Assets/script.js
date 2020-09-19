@@ -75,9 +75,6 @@ $(document).ready(function () {
     // startingPage.attr("style", "display: none");
     // resultPage.attr("style", "display: inline");
   });
-  // $(window).on("load", function () {
-  //   $(".background1").addClass("fadein");
-  // });
   // this function retrieves the users location from their browser window.
   function getLocation() {
     if (navigator.geolocation) {
@@ -125,48 +122,48 @@ $(document).ready(function () {
       });
     }
   }
+      // api link to the top list of satellites from uphere.space
+      function upHereSpace() {
+        // grab the users current longitude and latitude coordinates
+        navigator.geolocation.getCurrentPosition(function (position) {
+        //   console.log("latitude coordinate: " + position.coords.latitude);
+        //   console.log("longitude coordinate: " + position.coords.longitude);
+          var userLat = position.coords.latitude;
+          var userLng = position.coords.longitude;
 
-  // api link to the top list of satellites from uphere.space
-  function upHereSpace() {
-    // grab the users current longitude and latitude coordinates
-    navigator.geolocation.getCurrentPosition(function (position) {
-      //   console.log("latitude coordinate: " + position.coords.latitude);
-      //   console.log("longitude coordinate: " + position.coords.longitude);
-      var userLat = position.coords.latitude;
-      var userLng = position.coords.longitude;
+          var settings = {
+            async: true,
+            crossDomain: true,
+            url:
+              "https://uphere-space1.p.rapidapi.com/user/visible?lat=" +
+              userLat +
+              "&lng=" +
+              userLng,
+            method: "GET",
+            headers: {
+              "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
+              "x-rapidapi-key":
+                "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
+            },
+          };
 
-      var settings = {
-        async: true,
-        crossDomain: true,
-        url:
-          "https://uphere-space1.p.rapidapi.com/user/visible?lat=" +
-          userLat +
-          "&lng=" +
-          userLng,
-        method: "GET",
-        headers: {
-          "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
-          "x-rapidapi-key":
-            "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
-        },
-      };
+          $.ajax(settings).done(function (response) {
+            console.log(response);
+            var satName = response[0].name;
+            // console.log("Satellite name: " + satName);
+            var satNumber = response[0].number;
+            // console.log("Satellite number: " + satNumber);
 
-      $.ajax(settings).done(function (response) {
-        console.log(response);
-        var satName = response[0].name;
-        // console.log("Satellite name: " + satName);
-        var satNumber = response[0].number;
-        // console.log("Satellite number: " + satNumber);
-
-        // dynamically populate the sunrise html page with response information
-        $(".cardOne-title").text("Satellite: " + satName);
-        $("#satellite").addClass("d-none");
-        $(".cardOne-text").text("Number: " + satNumber);
-      });
-    });
-  }
-  upHereSpace();
-
+            // dynamically populate the sunrise html page with response information
+            $(".cardOne-title").text("Satellite: " + satName);
+            $("#satellite").addClass("d-none");
+            $(".cardOne-text").text("Number: " + satNumber);
+          });
+          
+        });
+      }
+      upHereSpace();
+      
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -192,6 +189,7 @@ $(document).ready(function () {
         $(".cardTwo-text").text("ID number: " + asteroidIdNumber);
         var astLink = $("<a>");
         astLink.attr("href", jplURL);
+        astLink.attr("target","_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
       });

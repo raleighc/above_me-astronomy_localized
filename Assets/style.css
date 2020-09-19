@@ -33,7 +33,7 @@
   background-size: cover;
   opacity: 0;
   transition: opacity 5s;
-} 
+}
 
 .background2.fadein:before {
   opacity: 1;
@@ -66,4 +66,49 @@
   background-color:rgb(192, 227, 233);
   color: #6c757d;
   text-align: center;
+}
+
+#satellite-option {
+  margin: 30px;
+}
+
+#asteroid-option {
+  margin: 30px;
+}
+
+.asteroid-fade,
+.satellite-fade {
+    width: 60px;
+    height: 60px;
+    
+    /* background-color: #ff6699; */
+    animation: 4s fadeIn;
+    animation-fill-mode: forwards;
+    
+    visibility: hidden;
+  }
+  .asteroid-fade,
+  .satellite-fade:hover {
+    /* background-color: #123; */
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      visibility: visible;
+      opacity: 1;
+    }
+  }
+  
+
+#satellite-icon{
+    width: 200px;
+    height: auto;
+}
+
+#asteroid-icon{
+    width: 200px;
+    height: auto;
 }
