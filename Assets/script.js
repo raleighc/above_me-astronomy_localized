@@ -63,11 +63,6 @@ $(document).ready(function () {
     // startingPage.attr("style", "display: none");
     // resultPage.attr("style", "display: inline");
   });
-  // $(window).on("load", function () {
-  //   $(".background1").addClass("fadein");
-  // });
-  console.log("Hello World!");
-  console.log(window);
 
   // this function retrieves the users location from their browser window.
   function getLocation() {
@@ -86,7 +81,7 @@ $(document).ready(function () {
     // console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
   
     // this function launches the sky-map window of the stars relevant to users current location.
-
+    sunriseSunset();
     function sunriseSunset() {
       var sunriseURL =
         "https://api.sunrise-sunset.org/json?lat=" +
@@ -114,7 +109,6 @@ $(document).ready(function () {
       });
     }
   }
-    sunriseSunset();
       // api link to the top list of satellites from uphere.space
       function upHereSpace() {
         // grab the users current longitude and latitude coordinates
@@ -182,6 +176,7 @@ $(document).ready(function () {
         $(".cardTwo-text").text(("ID number: " + asteroidIdNumber));
         var astLink = $("<a>");
         astLink.attr("href", jplURL);
+        astLink.attr("target","_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
       });
