@@ -38,10 +38,32 @@
 .background2.fadein:before {
   opacity: 1;
 }
-#result-page {
-  /* display: none; */
+
+.date{
+  font-size: 14px;
+  color: rgb(200, 214, 226);
 }
 
-#starting-page {
-  display: block;
+.center{
+  margin: auto;
+  width: 100%;
+  border: 1px;
+  padding: 10px;
+}
+
+#start-btn{
+}
+
+
+.footer {
+  font-size: 10px;
+  position: fixed;
+  padding: 12px 0px 0px 0px;
+  border-top: 3px solid #d1a9b7;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color:rgb(192, 227, 233);
+  color: #6c757d;
+  text-align: center;
 }
