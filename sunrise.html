@@ -34,10 +34,12 @@
       >
       <span id="currentDay" class="lead date"></span>
     </nav>
-    <main class="container-fluid">
+    <main class="container-flex sunrise-container">
       <div class="row" id="result-page">
-        <div class="col-md-6 satellite-fade" >
+        <div id="satellite-el" class="col-lg-6 col-sm-8 float-left satellite-fade" >
             <img id="satellite-icon" src="./Assets/satellite.png">
+            <br>
+            <button class="btn btn-danger switch-btn-one">Satellite</button>
             <div class="card" id="satellite-option" style="width: 18rem;">
                 <div class="card-body">
                     <div class="spinner-border" id="satellite" role="status">
@@ -49,8 +51,10 @@
                 </div>
               </div>
         </div>
-        <div class="col-md-6 asteroid-fade">
+        <div id="asteroid-el" class="col-lg-6 col-sm-8 float-left asteroid-fade">
             <img id="asteroid-icon" src="Assets/asteroid-icon.png">
+            <br>
+            <button class="btn btn-danger switch-btn-two">Asteroid</button>
             <div class="card" id="asteroid-option" style="width: 18rem;">
                 <div class="card-body">
                     

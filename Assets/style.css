@@ -2,7 +2,7 @@
 .background1,
 .background2 {
   position: relative;
-  background: url(./images/black_and_white_space.png) center;
+  background: url(./images/rendered.png);
   background-size: cover;
   width: 100%;
   height: 100vh;
@@ -13,7 +13,7 @@
   width: 100%;
   height: 100vh !important;
   position: absolute;
-  background: url(./images/smokey-fall-smoke-sunset.jpg);
+  background: url(./images/sunrise-warm.png);
   background-position: center;
   background-size: cover;
   opacity: 0;
@@ -28,7 +28,7 @@
   width: 100%;
   height: 100vh !important;
   position: absolute;
-  background: url(./images/stars_gradient.jpg);
+  background: url(./images/purple-cosmos.png);
   background-position: center;
   background-size: cover;
   opacity: 0;
@@ -54,6 +54,10 @@
 #start-btn{
 }
 
+.sunrise-container{
+  float: none;
+  margin: 150px;
+}
 
 .footer {
   font-size: 10px;
@@ -68,11 +72,9 @@
   text-align: center;
 }
 
+#asteroid-option,
 #satellite-option {
-  margin: 30px;
-}
-
-#asteroid-option {
+  display: none;
   margin: 30px;
 }
 
@@ -87,7 +89,7 @@
     
     visibility: hidden;
   }
-  .asteroid-fade,
+  
   .satellite-fade:hover {
     /* background-color: #123; */
   }
@@ -101,9 +103,7 @@
       opacity: 1;
     }
   }
-  
-
-#satellite-icon{
+  #satellite-icon{
     width: 200px;
     height: auto;
 }
@@ -112,3 +112,13 @@
     width: 200px;
     height: auto;
 }
+
+  #satellite-el{
+    float:left;
+    /* margin-right: 20px; */
+  }
+#asteroid-el{
+/* overflow: hidden;  */
+/* margin: 10px; */
+}
+

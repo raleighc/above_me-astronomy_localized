@@ -159,6 +159,11 @@ $(document).ready(function () {
             $("#satellite").addClass("d-none");
             $(".cardOne-text").text("Number: " + satNumber);
           });
+
+          $(".switch-btn-one").on("click", function(){
+            $("#satellite-option").attr("style", "display: inline-block");
+            $(".switch-btn-one").attr("style", "display: none");
+          })
           
         });
       }
@@ -176,9 +181,15 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
-        // console.log(response);
-        var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url;
+        console.log(response);
+        var jplURL = response.near_earth_objects[currentDay][1].nasa_jpl_url;
+
+        // ;old=0;orb=1;cov=0;log=0;cad=0#orb
+        // ;old=0;orb=1;cov=0;log=0;cad=0#orb
+
         console.log("NASA url: " + jplURL);
+        var asteroidIframe = jplURL + ";old=0;orb=1;cov=0;log=0;cad=0#orb"
+        console.log(asteroidIframe + "check the Orbit");
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects[currentDay][0].name;
         // console.log("Asteroid name: " + asteroidObjName);
@@ -192,6 +203,10 @@ $(document).ready(function () {
         astLink.attr("target","_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
+      });
+      $(".switch-btn-two").on("click", function(){
+        $("#asteroid-option").attr("style", "display: inline-block");
+        $(".switch-btn-two").attr("style", "display: none");
       });
   }
   asteroidNeoWs();
