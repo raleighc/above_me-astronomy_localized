@@ -27,10 +27,11 @@
   </head>
 
   <body class="background1">
-    <main class="container">
+    <main class="container-fluid">
       <div class="row" id="result-page">
-        <div class="col-md-6">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-6 satellite-fade" >
+            <img id="satellite-icon" src="./Assets/satellite.png">
+            <div class="card" id="satellite-option" style="width: 18rem;">
                 <div class="card-body">
                     <div class="spinner-border" id="satellite" role="status">
                         <span class="sr-only">Loading...</span>
@@ -41,8 +42,9 @@
                 </div>
               </div>
         </div>
-        <div class="col-md-6">
-            <div class="card" style="width: 18rem;">
+        <div class="col-md-6 asteroid-fade">
+            <img id="asteroid-icon" src="Assets/asteroid-icon.png">
+            <div class="card" id="asteroid-option" style="width: 18rem;">
                 <div class="card-body">
                     
                   <h5 class="cardTwo-title"></h5>
