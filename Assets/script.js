@@ -265,8 +265,8 @@ $(document).ready(function () {
   nasaPicOfDay();
 
   function wikiAPI() {
-    var wikiURL =
-        "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&revids=347819%7C5487%7C548945&formatversion=2";
+    var wikiURL =  "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=astronomy"
+        // "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&prop=images&prop=revisions&rvprop=content&rvsection=0&titles=Kenny%20Chesney";
     $.ajax({
             url: wikiURL,
             method: "GET",
