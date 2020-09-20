@@ -5,7 +5,7 @@ $(document).ready(function () {
   var coords = JSON.parse(localStorage.getItem("latLon"));
 
   $("#currentDay").text(dateTime);
-  console.log(currentTime);
+  // console.log(currentTime);
 
   $(window).on("load", function () {
     $(".background1").addClass("fadein");
@@ -17,7 +17,7 @@ $(document).ready(function () {
   $("#starBtn").on("click", function () {
     $("#starInfo").html("");
     starMainEl.html("")
-    console.log("starBtn was clicked");
+    // console.log("starBtn was clicked");
     skyMap(coords.lat, coords.lon);
     
     
@@ -74,7 +74,7 @@ $(document).ready(function () {
       },
 
       success: function (response) {
-        console.log(response);
+        // console.log(response);
         
   }
 })
@@ -89,7 +89,7 @@ $(document).ready(function () {
   var startBtn = $("#start-btn");
   //create an onclick function for the start-button
   $("#start-btn").on("submit", function () {
-    console.log("You clicked me!");
+    // console.log("You clicked me!");
     // show the result page and hide the starting page
     // startingPage.attr("style", "display: none");
     // resultPage.attr("style", "display: inline");
@@ -103,7 +103,6 @@ $(document).ready(function () {
       alert("This site requires geolocation to be shared.");
     }
   }
-  console.log(window);
   getLocation();
   function showPosition(position) {
     // Grab coordinates from the given object
@@ -131,8 +130,8 @@ $(document).ready(function () {
         var sunSet = response.results.sunset;
         var currentSunSet = new Date(sunSet);
         var now = new Date();
-        console.log(now);
-        console.log(currentSunRise);
+        // console.log(now);
+        // console.log(currentSunRise);
         if (now > currentSunRise && now < currentSunSet) {
           $("#start-btn").attr("href", "./sunrise.html");
         } else {
@@ -168,11 +167,11 @@ $(document).ready(function () {
       };
 
       $.ajax(settings).done(function (response) {
-        console.log(response);
+        // console.log(response);
         var satName = response[0].name;
         // console.log("Satellite name: " + satName);
         var satNumber = response[0].number;
-        console.log("Satellite number: " + satNumber);
+        // console.log("Satellite number: " + satNumber);
 
         // dynamically populate the sunrise html page with response information
         $(".cardOne-title").text("Satellite: " + satName);
@@ -190,7 +189,7 @@ $(document).ready(function () {
   upHereSpace();
 
  var targetPractice = $("#external-script").innerHTML;
- console.log(targetPractice);
+//  console.log(targetPractice);
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -203,7 +202,7 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
-        console.log(response);
+        // console.log(response);
         var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url;
         // asteroid size in diameter
         var asteroidSize = Math.round(
@@ -267,18 +266,16 @@ $(document).ready(function () {
   nasaPicOfDay();
 
   function wikiAPI() {
-    var wikiURL =
-        "https://en.wikipedia.org/w/api.php?action=query&format=json&revids=347819%7C5487%7C548945&formatversion=2";
-    console.log(wikiURL);
+    var wikiURL =  "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=astronomy"
+        // "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&prop=images&prop=revisions&rvprop=content&rvsection=0&titles=Kenny%20Chesney";
     $.ajax({
             url: wikiURL,
             method: "GET",
         })
         // We store all of the retrieved data inside of an object called "response"
         .then(function(response) {
-            console.log("thisismywikiapi" + response);
-            // var wikiAPIreturn = response.hdurl;
-            // console.log(imageOfTheDay);
+            console.log(response);
+            
         });
 }
 wikiAPI();
