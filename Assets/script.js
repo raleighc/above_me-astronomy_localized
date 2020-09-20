@@ -1,7 +1,7 @@
 $(document).ready(function () {
   var currentTime = moment().format("YYYY-MM-DDThh:mm:ss" + "+00:00");
   var dateTime = moment().format("dddd, MMMM Do");
-  var currentDay = moment().utc().format("YYYY-MM-DD")
+  var currentDay = moment().utc().format("YYYY-MM-DD");
   var coords = JSON.parse(localStorage.getItem("latLon"));
 
   $("#currentDay").text(dateTime);
@@ -110,7 +110,7 @@ $(document).ready(function () {
     var lat = position.coords.latitude.toFixed(4);
     var lon = position.coords.longitude.toFixed(4);
     // console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
-    var latLon = {"lat":lat, "lon":lon}
+    var latLon = { lat: lat, lon: lon };
     localStorage.setItem("latLon", JSON.stringify(latLon));
     // this function launches the sky-map window of the stars relevant to users current location.
     sunriseSunset();
@@ -141,48 +141,55 @@ $(document).ready(function () {
       });
     }
   }
-      // api link to the top list of satellites from uphere.space
-      function upHereSpace() {
-        // grab the users current longitude and latitude coordinates
-        navigator.geolocation.getCurrentPosition(function (position) {
-        //   console.log("latitude coordinate: " + position.coords.latitude);
-        //   console.log("longitude coordinate: " + position.coords.longitude);
-          var userLat = position.coords.latitude;
-          var userLng = position.coords.longitude;
 
-          var settings = {
-            async: true,
-            crossDomain: true,
-            url:
-              "https://uphere-space1.p.rapidapi.com/user/visible?lat=" +
-              userLat +
-              "&lng=" +
-              userLng,
-            method: "GET",
-            headers: {
-              "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
-              "x-rapidapi-key":
-                "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
-            },
-          };
+  // api link to the top list of satellites from uphere.space
+  function upHereSpace() {
+    // grab the users current longitude and latitude coordinates
+    navigator.geolocation.getCurrentPosition(function (position) {
+      //   console.log("latitude coordinate: " + position.coords.latitude);
+      //   console.log("longitude coordinate: " + position.coords.longitude);
+      var userLat = position.coords.latitude;
+      var userLng = position.coords.longitude;
 
-          $.ajax(settings).done(function (response) {
-            console.log(response);
-            var satName = response[0].name;
-            // console.log("Satellite name: " + satName);
-            var satNumber = response[0].number;
-            // console.log("Satellite number: " + satNumber);
+      var settings = {
+        async: true,
+        crossDomain: true,
+        url:
+          "https://uphere-space1.p.rapidapi.com/user/visible?lat=" +
+          userLat +
+          "&lng=" +
+          userLng,
+        method: "GET",
+        headers: {
+          "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
+          "x-rapidapi-key":
+            "4b53b200a5msh2b293e52ffd17d9p106b4bjsn85a2dc5edf19",
+        },
+      };
 
-            // dynamically populate the sunrise html page with response information
-            $(".cardOne-title").text("Satellite: " + satName);
-            $("#satellite").addClass("d-none");
-            $(".cardOne-text").text("Number: " + satNumber);
-          });
-          
-        });
-      }
-      upHereSpace();
-      
+      $.ajax(settings).done(function (response) {
+        console.log(response);
+        var satName = response[0].name;
+        // console.log("Satellite name: " + satName);
+        var satNumber = response[0].number;
+        console.log("Satellite number: " + satNumber);
+
+        // dynamically populate the sunrise html page with response information
+        $(".cardOne-title").text("Satellite: " + satName);
+        $("#satellite").addClass("d-none");
+        $(".cardOne-text").text("Number: " + satNumber);
+      });
+
+      $(".switch-btn-one").on("click", function () {
+        $("#satellite-option").attr("style", "display: inline-block");
+        $(".switch-btn-one").attr("style", "display: none");
+      });
+    });
+  }
+  upHereSpace();
+
+ var targetPractice = $("#external-script").innerHTML;
+ console.log(targetPractice);
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -195,23 +202,50 @@ $(document).ready(function () {
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
+        console.log(response);
+        var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url;
+        // asteroid size in diameter
+        var asteroidSize = Math.round(
+          response.near_earth_objects[currentDay][0].estimated_diameter.feet
+            .estimated_diameter_max
+        );
+        // closest approach dat and time
+        var asteroidNear =
+          response.near_earth_objects[currentDay][0].close_approach_data[0]
+            .close_approach_date_full;
+        // asteroid hazard check
+        var hazardCheck =
+          response.near_earth_objects[currentDay][0]
+            .is_potentially_hazardous_asteroid;
+        // asteroid speed in MPH
+        var relativeVel = Math.round(
+          response.near_earth_objects[currentDay][0].close_approach_data[0]
+            .relative_velocity.miles_per_hour
+        );
         // console.log(response);
-        var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url + ";old=0;orb=1;cov=0;log=0;cad=0#orb";
-        console.log("NASA url: " + jplURL);
+      
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects[currentDay][0].name;
-        // console.log("Asteroid name: " + asteroidObjName);
         var asteroidIdNumber = response.near_earth_objects[currentDay][0].id;
-        // console.log("ID number: " + asteroidIdNumber);
         // dynamically populate the second button option
         $(".cardTwo-title").text("Asteroid name: " + asteroidObjName);
         $(".cardTwo-text").text("ID number: " + asteroidIdNumber);
         var astLink = $("<a>");
         astLink.attr("href", jplURL);
-        astLink.attr("target","_blank");
+        astLink.attr("target", "_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
+        $("#asteroid-speed").append("Asteroid velocity: " + relativeVel + "MPH");
+        $("#asteroid-size").append(
+          "Max estimated diameter in feet: " + asteroidSize
+        );
+        $("#asteroid-close").append("Closest approach: " + asteroidNear);
+        $("#asteroid-hazard").append("Is asteroid hazardous: " + hazardCheck);
       });
+    $(".switch-btn-two").on("click", function () {
+      $("#asteroid-option").attr("style", "display: inline-block");
+      $(".switch-btn-two").attr("style", "display: none");
+    });
   }
   asteroidNeoWs();
 
