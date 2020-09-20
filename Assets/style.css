@@ -44,16 +44,45 @@
   color: rgb(200, 214, 226);
 }
 
+#starMain{
+  align-content: center;
+}
+
+.vertCenter{
+  display: flex;
+align-items: center;
+}
+.centerContent{
+  width: auto;
+  height: 100vh;
+  display: flex;
+align-items: center;
+}
 .center{
   margin: auto;
-  width: 100%;
-  border: 1px;
-  padding: 10px;
+  width: 256px;
+  height: 100vh; 
+  display: flex;
+align-items: center;
+}
+.center:hover{
+  margin: auto;
+  width: 256px;
+  height: 100vh;
+  display: flex;
+align-items: center;
 }
 
 #start-btn{
+  align: center;
+  vertical-align: center;
+  
 }
-
+/* #start-btn:hover{
+  background-color: whitesmoke;
+  width: 256px;
+  height: 256px;
+} */
 
 .footer {
   font-size: 10px;
@@ -111,4 +140,8 @@
 #asteroid-icon{
     width: 200px;
     height: auto;
+}
+#star-icon{
+  width: 200px;
+  height: auto;
 }
