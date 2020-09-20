@@ -36,40 +36,58 @@
     </nav>
     <main class="container-flex sunrise-container">
       <div class="row" id="result-page">
-        <div id="satellite-el" class="col-lg-6 col-sm-8 float-left satellite-fade" >
-            <img id="satellite-icon" src="./Assets/satellite.png">
-            <br>
-            <button class="btn btn-danger switch-btn-one">Satellite</button>
-            <div class="card" id="satellite-option" style="width: 18rem;">
-                <div class="card-body">
-                    <div class="spinner-border" id="satellite" role="status">
-                        <span class="sr-only">Loading...</span>
-                      </div>
-                  <h5 class="cardOne-title"></h5>
-                  <p class="cardOne-text"></p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
+        <div
+          id="satellite-el"
+          class="col-lg-6 col-sm-8 float-left satellite-fade"
+        >
+          <img id="satellite-icon" src="./Assets/satellite.png" />
+          <br />
+          <button class="btn btn-danger switch-btn-one">Satellite</button>
+          <div class="card" id="satellite-option" style="width: 18rem">
+            <div class="card-body">
+              <div class="spinner-border" id="satellite" role="status">
+                <span class="sr-only">Loading...</span>
               </div>
+              <h5 class="cardOne-title"></h5>
+              <p class="cardOne-text"></p>
+              <script>
+                var size_n2yo = "small";
+                var norad_n2yo = 
+                var map_n2yo = '1';
+              </script>
+              <script
+                type="text/javascript"
+                src="https://www.n2yo.com/js/widget-tracker.js"
+              ></script>
+            </div>
+          </div>
         </div>
-        <div id="asteroid-el" class="col-lg-6 col-sm-8 float-left asteroid-fade">
-            <img id="asteroid-icon" src="Assets/asteroid-icon.png">
-            <br>
-            <button class="btn btn-danger switch-btn-two">Asteroid</button>
-            <div class="card" id="asteroid-option" style="width: 18rem;">
-                <div class="card-body">
-                    
-                  <h5 class="cardTwo-title"></h5>
-                  <p class="cardTwo-text"></p>
-                  <p id="asteroid-link"></p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-              </div>
+        <div
+          id="asteroid-el"
+          class="col-lg-6 col-sm-8 float-left asteroid-fade"
+        >
+          <img id="asteroid-icon" src="Assets/asteroid-icon.png" />
+          <br />
+          <button class="btn btn-danger switch-btn-two">Asteroid</button>
+          <div class="card" id="asteroid-option" style="width: 18rem">
+            <div class="card-body">
+              <h5 class="cardTwo-title"></h5>
+              <p class="cardTwo-text"></p>
+              <p id="asteroid-speed"></p>
+              <p id="asteroid-size"></p>
+              <p id="asteroid-close"></p>
+              <p id="asteroid-hazard"></p>
+              <p id="asteroid-link"></p>
+             
+            </div>
+          </div>
         </div>
       </div>
     </main>
     <footer class="footer">
       <p>©Copyright Jimmy/Jude/Shelley</p>
     </footer>
+
     <script
       src="https://code.jquery.com/jquery-3.5.1.min.js"
       integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0="
