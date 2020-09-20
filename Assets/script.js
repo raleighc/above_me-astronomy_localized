@@ -120,6 +120,7 @@ $(document).ready(function () {
       });
     }
   }
+
   // api link to the top list of satellites from uphere.space
   function upHereSpace() {
     // grab the users current longitude and latitude coordinates
@@ -152,8 +153,6 @@ $(document).ready(function () {
         var satNumber = response[0].number;
         console.log("Satellite number: " + satNumber);
 
-        norad_n2yo = satNumber
-
         // dynamically populate the sunrise html page with response information
         $(".cardOne-title").text("Satellite: " + satName);
         $("#satellite").addClass("d-none");
@@ -168,6 +167,8 @@ $(document).ready(function () {
   }
   upHereSpace();
 
+ var targetPractice = $("#external-script").innerHTML;
+ console.log(targetPractice);
   // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
@@ -183,22 +184,26 @@ $(document).ready(function () {
         console.log(response);
         var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url;
         // asteroid size in diameter
-        var asteroidSize = Math.round(response.near_earth_objects[currentDay][0].estimated_diameter.feet.estimated_diameter_max);
-        console.log("Max estimated diameter in feet: " + asteroidSize);
-        // closest approach dat and time 
-        var asteroidNear = response.near_earth_objects[currentDay][0].close_approach_data[0].close_approach_date_full;
-        console.log("Closest approach: " + asteroidNear);
+        var asteroidSize = Math.round(
+          response.near_earth_objects[currentDay][0].estimated_diameter.feet
+            .estimated_diameter_max
+        );
+        // closest approach dat and time
+        var asteroidNear =
+          response.near_earth_objects[currentDay][0].close_approach_data[0]
+            .close_approach_date_full;
         // asteroid hazard check
-        var hazardCheck = response.near_earth_objects[currentDay][0].is_potentially_hazardous_asteroid;
-        console.log("Is asteroid hazardous: " + hazardCheck);
+        var hazardCheck =
+          response.near_earth_objects[currentDay][0]
+            .is_potentially_hazardous_asteroid;
         // asteroid speed in MPH
-        var relativeVel = Math.round(response.near_earth_objects[currentDay][0].close_approach_data[0].relative_velocity.miles_per_hour);
-        console.log("Asteroid velocity: " + relativeVel + " MPH");
+        var relativeVel = Math.round(
+          response.near_earth_objects[currentDay][0].close_approach_data[0]
+            .relative_velocity.miles_per_hour
+        );
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects[currentDay][0].name;
-        // console.log("Asteroid name: " + asteroidObjName);
         var asteroidIdNumber = response.near_earth_objects[currentDay][0].id;
-        // console.log("ID number: " + asteroidIdNumber);
         // dynamically populate the second button option
         $(".cardTwo-title").text("Asteroid name: " + asteroidObjName);
         $(".cardTwo-text").text("ID number: " + asteroidIdNumber);
@@ -207,8 +212,10 @@ $(document).ready(function () {
         astLink.attr("target", "_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
-        $("#asteroid-speed").append("Asteroid velocity: " + relativeVel);
-        $("#asteroid-size").append("Max estimated diameter in feet: " + asteroidSize);
+        $("#asteroid-speed").append("Asteroid velocity: " + relativeVel + "MPH");
+        $("#asteroid-size").append(
+          "Max estimated diameter in feet: " + asteroidSize
+        );
         $("#asteroid-close").append("Closest approach: " + asteroidNear);
         $("#asteroid-hazard").append("Is asteroid hazardous: " + hazardCheck);
       });
@@ -234,6 +241,4 @@ $(document).ready(function () {
       });
   }
   nasaPicOfDay();
-
-
 });
