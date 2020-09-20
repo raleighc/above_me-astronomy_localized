@@ -231,6 +231,21 @@ $(document).ready(function () {
   }
   nasaPicOfDay();
 
-
+  function wikiAPI() {
+    var wikiURL =
+        "https://en.wikipedia.org/w/api.php?action=query&format=json&revids=347819%7C5487%7C548945&formatversion=2";
+    console.log(wikiURL);
+    $.ajax({
+            url: wikiURL,
+            method: "GET",
+        })
+        // We store all of the retrieved data inside of an object called "response"
+        .then(function(response) {
+            console.log("thisismywikiapi" + response);
+            // var wikiAPIreturn = response.hdurl;
+            // console.log(imageOfTheDay);
+        });
+}
+wikiAPI();
 
 });
