@@ -179,6 +179,7 @@ $(document).ready(function () {
         $("#satellite").addClass("d-none");
         $(".cardOne-text").text("Number: " + satNumber);
       });
+      import { norad_n2yo } from "https://www.n2yo.com/js/widget-tracker.js"; 
 
       $(".switch-btn-one").on("click", function () {
         $("#satellite-option").attr("style", "display: inline-block");
