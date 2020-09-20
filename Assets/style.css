@@ -159,3 +159,8 @@ align-items: center;
   width: 200px;
   height: auto;
 }
+
+#map{
+  height: 220px;
+  width: 250px;
+}
