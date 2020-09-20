@@ -1,33 +1,26 @@
 $(document).ready(function () {
   var currentTime = moment().format("YYYY-MM-DDThh:mm:ss" + "+00:00");
   var dateTime = moment().format("dddd, MMMM Do");
+  var raTime = parseInt(moment().utc().format("HH"));
   var currentDay = moment().utc().format("YYYY-MM-DD");
   var coords = JSON.parse(localStorage.getItem("latLon"));
-
   $("#currentDay").text(dateTime);
-  // console.log(currentTime);
+console.log(coords)
+  if (coords === null){
+    getLocation();
+  }
 
   $(window).on("load", function () {
     $(".background1").addClass("fadein");
     $(".background2").addClass("fadein");
   });
-  var starMainEl = $("#starMain");
-  var jumboStar = $("<div>").addClass("jumbotron jumbotron-fluid");
-  
+
   $("#starBtn").on("click", function () {
-    $("#starInfo").html("");
-    starMainEl.html("")
+    $(".frame").html("");
+    $(".starInfo").html("");
     // console.log("starBtn was clicked");
     skyMap(coords.lat, coords.lon);
-    
-    
-    var starContainer = $("<div>").addClass("container");
-    var starTitle = $("<h3>").addClass("display-4").text("Today's Star");
-    
-
-    starContainer.append(starTitle);
-    jumboStar.append(starContainer);
-    starMainEl.append(jumboStar)
+    nasaPicOfDay();
   });
 
   function skyMap(lat, lon) {
@@ -38,49 +31,76 @@ $(document).ready(function () {
     } else {
       lon = lon / 15;
     }
-    var ra = lon.toString();
+    var fixedRA = lon;
+    if (fixedRA + raTime > 24){
+      fixedRA = fixedRA + raTime -24;
+    } else{
+      fixedRA = fixedRA + raTime
+    }
+
+    var ra = fixedRA.toString();
     
     var skyMapURL =
       "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=6&ra=" +
       ra +
       "&de=" +
       lat;
-
+    var exploreText = $("<h3>").text("Explore the Stars Above You");
     var skyIframe = $("<iframe>").attr("src", skyMapURL);
-    skyIframe.attr("width", 400);
-    skyIframe.attr("height", 300);
-    starMainEl.prepend(skyIframe);
+    skyIframe.attr("width", "100%");
+    skyIframe.attr("height", 400);
+    $(".frame").append(exploreText, skyIframe);
+    
   }
-  function skyMapInfo(lat, lon) {
-    lon = parseFloat(lon);
-    if (lon < 0){
-      lon = lon + 360;
-      lon = lon / 15;
-    } else {
-      lon = lon / 15;
-    }
-    var ra = lon.toString();
-    var skyMapInfoURL = "https://cors-anywhere.herokuapp.com/http://server2.sky-map.org/getstars.jsp?ra=" + ra + "&de=" + lat + "&angle=5&max_stars=10&max_vmag=8"
-    
-    
+  function nasaPicOfDay() {
+    var astroPicURL =
+      "https://api.nasa.gov/planetary/apod?api_key=Bgi1uiAMfef2QgydlF1ezKjCgeb3OdGfrj7B87wv&date=" + currentDay;
     $.ajax({
-      type: "GET",
-      url: skyMapInfoURL,
-      dataType: "xml",
+      url: astroPicURL,
+      method: "GET",
+    })
+      // We store all of the retrieved data inside of an object called "response"
+      .then(function (response) {
+        var imageOfTheDay = response.hdurl;
+        var imageEx = response.explanation;
 
-      error: function (e) {
-          alert("An error occurred while processing XML file");
-          console.log("XML reading Failed: ", e);
-      },
+        var iotdEl = $("<img>").attr("src", imageOfTheDay).addClass("iotdSize");
+        var iotdExEl = $("<p>").text(imageEx);
+        var iotdTitle = $("<h5>").text("NASA Image of the Day:")
 
-      success: function (response) {
-        // console.log(response);
-        
+        $(".starInfo").append(iotdTitle, iotdEl, iotdExEl);
+      });
   }
-})
-  }
+ 
 
-  skyMapInfo(coords.lat, coords.lon);
+//   function skyMapInfo(lat, lon) {
+//     lon = parseFloat(lon);
+//     if (lon < 0){
+//       lon = lon + 360;
+//       lon = lon / 15;
+//     } else {
+//       lon = lon / 15;
+//     }
+//     var fixedRA = lon;
+//     if (fixedRA + raTime > 24){
+//       fixedRA = fixedRA + raTime -24;
+//     } else{
+//       fixedRA = fixedRA + raTime
+//     }
+//     var ra = fixedRA.toString();
+//     var skyMapInfoURL = "https://cors-anywhere.herokuapp.com/http://server2.sky-map.org/getstars.jsp?ra=" + ra + "&de=" + lat + "&angle=5&max_stars=10&max_vmag=8"   
+//     $.ajax({
+//       type: "GET",
+//       url: skyMapInfoURL,
+//       dataType: "xml",
+//       error: function (e) {
+//           alert("An error occurred while processing XML file");
+//       },
+//       success: function (response) {   
+//   }
+// })
+//   }
+  // skyMapInfo(coords.lat, coords.lon);
 
   // grab and connect html elements
   var startingPage = $("#starting-page");
@@ -103,7 +123,7 @@ $(document).ready(function () {
       alert("This site requires geolocation to be shared.");
     }
   }
-  getLocation();
+  
   function showPosition(position) {
     // Grab coordinates from the given object
     var lat = position.coords.latitude.toFixed(4);
@@ -111,53 +131,48 @@ $(document).ready(function () {
     // console.log("Your coordinates are Latitude: " + lat + " Longitude " + lon);
     var latLon = { lat: lat, lon: lon };
     localStorage.setItem("latLon", JSON.stringify(latLon));
+    document.location.reload()
     // this function launches the sky-map window of the stars relevant to users current location.
-    sunriseSunset();
-    function sunriseSunset() {
-      var sunriseURL =
-        "https://api.sunrise-sunset.org/json?lat=" +
-        lat +
-        "&lng=" +
-        lon +
-        "&formatted=0";
-
-      $.ajax({
-        url: sunriseURL,
-        method: "GET",
-      }).then(function (response) {
-        var sunRise = response.results.sunrise;
-        var currentSunRise = new Date(sunRise);
-        var sunSet = response.results.sunset;
-        var currentSunSet = new Date(sunSet);
-        var now = new Date();
-        // console.log(now);
-        // console.log(currentSunRise);
-        if (now > currentSunRise && now < currentSunSet) {
-          $("#start-btn").attr("href", "./sunrise.html");
-        } else {
-          $("#start-btn").attr("href", "./sunset.html");
-        }
-      });
-    }
   }
+  
+  function sunriseSunset(lat, lon) {
+    var sunriseURL =
+      "https://api.sunrise-sunset.org/json?lat=" +
+      lat +
+      "&lng=" +
+      lon +
+      "&formatted=0";
 
+    $.ajax({
+      url: sunriseURL,
+      method: "GET",
+    }).then(function (response) {
+      var sunRise = response.results.sunrise;
+      var currentSunRise = new Date(sunRise);
+      var sunSet = response.results.sunset;
+      var currentSunSet = new Date(sunSet);
+      var now = new Date();
+      // console.log(now);
+      // console.log(currentSunRise);
+      if (now > currentSunRise && now < currentSunSet) {
+        $("#start-btn").attr("href", "./sunrise.html");
+      } else {
+        $("#start-btn").attr("href", "./sunset.html");
+      }
+    });
+  }
+  sunriseSunset(coords.lat, coords.lon);
   // api link to the top list of satellites from uphere.space
-  function upHereSpace() {
-    // grab the users current longitude and latitude coordinates
-    navigator.geolocation.getCurrentPosition(function (position) {
-      //   console.log("latitude coordinate: " + position.coords.latitude);
-      //   console.log("longitude coordinate: " + position.coords.longitude);
-      var userLat = position.coords.latitude;
-      var userLng = position.coords.longitude;
-
+  function upHereSpace(lat, lon) {
+    
       var settings = {
         async: true,
         crossDomain: true,
         url:
           "https://uphere-space1.p.rapidapi.com/user/visible?lat=" +
-          userLat +
+          lat +
           "&lng=" +
-          userLng,
+          lon,
         method: "GET",
         headers: {
           "x-rapidapi-host": "uphere-space1.p.rapidapi.com",
@@ -183,9 +198,9 @@ $(document).ready(function () {
         $("#satellite-option").attr("style", "display: inline-block");
         $(".switch-btn-one").attr("style", "display: none");
       });
-    });
+  
   }
-  upHereSpace();
+  upHereSpace(coords.lat, coords.lon);
 
  var targetPractice = $("#external-script").innerHTML;
 //  console.log(targetPractice);
@@ -248,35 +263,20 @@ $(document).ready(function () {
   }
   asteroidNeoWs();
 
-  function nasaPicOfDay() {
-    var astroPicURL =
-      "https://api.nasa.gov/planetary/apod?api_key=Bgi1uiAMfef2QgydlF1ezKjCgeb3OdGfrj7B87wv&date=2020-08-14";
-    $.ajax({
-      url: astroPicURL,
-      method: "GET",
-    })
-      // We store all of the retrieved data inside of an object called "response"
-      .then(function (response) {
-        // console.log(response);
-        var imageOfTheDay = response.hdurl;
-        // console.log(imageOfTheDay);
-      });
-  }
-  nasaPicOfDay();
-
-  function wikiAPI() {
-    var wikiURL =  "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=astronomy"
-        // "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&prop=images&prop=revisions&rvprop=content&rvsection=0&titles=Kenny%20Chesney";
-    $.ajax({
-            url: wikiURL,
-            method: "GET",
-        })
-        // We store all of the retrieved data inside of an object called "response"
-        .then(function(response) {
-            console.log(response);
+  
+//   function wikiAPI() {
+//     var wikiURL =  "https://cors-anywhere.herokuapp.com/http://en.wikipedia.org/w/api.php?action=query&prop=extracts&format=json&exintro=&titles=breaking%20distant%20light"
+//         // "https://cors-anywhere.herokuapp.com/https://en.wikipedia.org/w/api.php?action=query&format=json&list=search&prop=images&prop=revisions&rvprop=content&rvsection=0&titles=Kenny%20Chesney";
+//     $.ajax({
+//             url: wikiURL,
+//             method: "GET",
+//         })
+//         // We store all of the retrieved data inside of an object called "response"
+//         .then(function(response) {
+//             console.log(response);
             
-        });
-}
-wikiAPI();
+//         });
+// }
+// wikiAPI();
 
 });
