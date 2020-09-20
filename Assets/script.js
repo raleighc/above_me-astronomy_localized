@@ -11,57 +11,76 @@ $(document).ready(function () {
     $(".background1").addClass("fadein");
     $(".background2").addClass("fadein");
   });
-
+  var starMainEl = $("#starMain");
+  var jumboStar = $("<div>").addClass("jumbotron jumbotron-fluid");
+  
   $("#starBtn").on("click", function () {
     $("#starInfo").html("");
-    $("#galaxyInfo").html("");
-    var jumboStar = $("<div>").addClass("jumbotron jumbotron-fluid");
-    var starContainer = $("<div>").addClass("container");
-    var starTitle = $("<h1>").addClass("display-4").text("Today's Star");
-    var starText = $("<p>")
-      .addClass("lead")
-      .text(
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam non consectetur esse dolores temporibus corporis, voluptate quo aut. Possimus excepturi neque nisi officiis laboriosam, at consectetur vitae quis commodi tenetur."
-      );
-
-    starContainer.append(starTitle, starText);
-    jumboStar.append(starContainer);
-    $("#starInfo").append(jumboStar);
-
-    
-    
+    starMainEl.html("")
+    console.log("starBtn was clicked");
     skyMap(coords.lat, coords.lon);
+    
+    
+    var starContainer = $("<div>").addClass("container");
+    var starTitle = $("<h3>").addClass("display-4").text("Today's Star");
+    
+
+    starContainer.append(starTitle);
+    jumboStar.append(starContainer);
+    starMainEl.append(jumboStar)
   });
 
   function skyMap(lat, lon) {
+    lon = parseFloat(lon);
+    if (lon < 0){
+      lon = lon + 360;
+      lon = lon / 15;
+    } else {
+      lon = lon / 15;
+    }
+    var ra = lon.toString();
+    
     var skyMapURL =
-      "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=10&ra=" +
-      lon +
+      "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=6&ra=" +
+      ra +
       "&de=" +
       lat;
 
     var skyIframe = $("<iframe>").attr("src", skyMapURL);
     skyIframe.attr("width", 400);
     skyIframe.attr("height", 300);
-    $("#galaxyInfo").append(skyIframe);
+    starMainEl.prepend(skyIframe);
   }
-  $("#galaxyBtn").on("click", function () {
-    console.log("GALAXY!!!!!");
-    $("#galaxyInfo").html("");
-    $("#starInfo").html("");
-    var jumboGalaxy = $("<div>").addClass("jumbotron jumbotron-fluid");
-    var galaxyContainer = $("<div>").addClass("container");
-    var galaxyTitle = $("<h1>").addClass("display-4").text("Today's Galaxy");
-    var galaxyText = $("<p>")
-      .addClass("lead")
-      .text(
-        "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laboriosam non consectetur esse dolores temporibus corporis, voluptate quo aut. Possimus excepturi neque nisi officiis laboriosam, at consectetur vitae quis commodi tenetur."
-      );
+  function skyMapInfo(lat, lon) {
+    lon = parseFloat(lon);
+    if (lon < 0){
+      lon = lon + 360;
+      lon = lon / 15;
+    } else {
+      lon = lon / 15;
+    }
+    var ra = lon.toString();
+    var skyMapInfoURL = "https://cors-anywhere.herokuapp.com/http://server2.sky-map.org/getstars.jsp?ra=" + ra + "&de=" + lat + "&angle=5&max_stars=10&max_vmag=8"
+    
+    
+    $.ajax({
+      type: "GET",
+      url: skyMapInfoURL,
+      dataType: "xml",
 
-    galaxyContainer.append(galaxyTitle, galaxyText);
-    jumboGalaxy.append(galaxyContainer);
-    $("#galaxyInfo").append(jumboGalaxy);
-  });
+      error: function (e) {
+          alert("An error occurred while processing XML file");
+          console.log("XML reading Failed: ", e);
+      },
+
+      success: function (response) {
+        console.log(response);
+        
+  }
+})
+  }
+
+  skyMapInfo(coords.lat, coords.lon);
 
   // grab and connect html elements
   var startingPage = $("#starting-page");
@@ -177,7 +196,7 @@ $(document).ready(function () {
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
         // console.log(response);
-        var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url;
+        var jplURL = response.near_earth_objects[currentDay][0].nasa_jpl_url + ";old=0;orb=1;cov=0;log=0;cad=0#orb";
         console.log("NASA url: " + jplURL);
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects[currentDay][0].name;
@@ -211,4 +230,7 @@ $(document).ready(function () {
       });
   }
   nasaPicOfDay();
+
+
+
 });
