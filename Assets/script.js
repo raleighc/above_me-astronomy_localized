@@ -25,7 +25,7 @@ console.log(coords)
 
   function skyMap(lat, lon) {
     lon = parseFloat(lon);
-    if (lon < 0){
+    if (lon < 0) {
       lon = lon + 360;
       lon = lon / 15;
     } else {
@@ -70,7 +70,7 @@ console.log(coords)
 
         $(".starInfo").append(iotdTitle, iotdEl, iotdExEl);
       });
-  }
+    }
  
 
 //   function skyMapInfo(lat, lon) {
@@ -182,18 +182,56 @@ console.log(coords)
       };
 
       $.ajax(settings).done(function (response) {
-        // console.log(response);
+        console.log(response);
+        // satellite longitude
+        var satLon = response[0].coordinates[0];
+        console.log(satLon);
+        // satellite latitude
+        var satLat = response[0].coordinates[1];
+        console.log(satLat);
+        // sat name
         var satName = response[0].name;
         // console.log("Satellite name: " + satName);
         var satNumber = response[0].number;
-        // console.log("Satellite number: " + satNumber);
+        console.log("Satellite number: " + satNumber);
 
         // dynamically populate the sunrise html page with response information
         $(".cardOne-title").text("Satellite: " + satName);
         $("#satellite").addClass("d-none");
         $(".cardOne-text").text("Number: " + satNumber);
+
+        // add a mini map to identify the satellite above
+        var myMap = L.map("map", {
+          center: [satLat, satLon],
+          zoom: 2,
+        });
+        
+        // generate a custom icon to show as the satellite 
+        var satIconFloat = L.icon({
+          iconUrl: "./assets/images/satellite-icon.png",
+          iconSize: [50, 40],
+          iconAnchor: [25, 16],
       });
 
+        var marker = L.marker([0, 0]).addTo(myMap);
+        L.tileLayer(
+          "https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}",
+          {
+            attribution:
+              "© <a href='https://www.mapbox.com/about/maps/'>Mapbox</a> © <a href='http://www.openstreetmap.org/copyright'>OpenStreetMap</a> <strong><a href='https://www.mapbox.com/map-feedback/' target='_blank'>Improve this map</a></strong>",
+            tileSize: 512,
+            maxZoom: 18,
+            zoomOffset: -1,
+            id: "mapbox/streets-v11",
+            accessToken:
+              "pk.eyJ1Ijoid2FybXNvZGFwb3AiLCJhIjoiY2tmYml4dnk0MDJ2ejJ6bnM1aXdxdDhxcCJ9.5MIm6wAYHJDqLd4jTvhW0g",
+          }
+        ).addTo(myMap);
+
+        marker.setLatLng([satLat,satLon], {icon: satIconFloat});
+
+      });
+      // display functionality of the satellite option
       $(".switch-btn-one").on("click", function () {
         $("#satellite-option").attr("style", "display: inline-block");
         $(".switch-btn-one").attr("style", "display: none");
@@ -201,10 +239,6 @@ console.log(coords)
   
   }
   upHereSpace(coords.lat, coords.lon);
-
- var targetPractice = $("#external-script").innerHTML;
-//  console.log(targetPractice);
-  // Variable for NeoWs URL with API key.
 
   // this function calls the AJAX pull for NeoWs object.
   function asteroidNeoWs() {
@@ -237,7 +271,7 @@ console.log(coords)
             .relative_velocity.miles_per_hour
         );
         // console.log(response);
-      
+
         // Potential data to grab: name, potential size, observable date range, distance from the earth at closest point, speed of travel, nasa_jpl_url
         var asteroidObjName = response.near_earth_objects[currentDay][0].name;
         var asteroidIdNumber = response.near_earth_objects[currentDay][0].id;
@@ -249,7 +283,9 @@ console.log(coords)
         astLink.attr("target", "_blank");
         astLink.text("NASA Link");
         $("#asteroid-link").append(astLink);
-        $("#asteroid-speed").append("Asteroid velocity: " + relativeVel + "MPH");
+        $("#asteroid-speed").append(
+          "Asteroid velocity: " + relativeVel + "MPH"
+        );
         $("#asteroid-size").append(
           "Max estimated diameter in feet: " + asteroidSize
         );

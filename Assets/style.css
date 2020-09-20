@@ -148,6 +148,10 @@ align-items: center;
   height: auto;
 }
 
+#map{
+  height: 220px;
+  width: 250px;
+}
 /* styles for sunset page */
 #starMain{
   align-content: center;
