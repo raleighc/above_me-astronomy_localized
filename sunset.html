@@ -25,9 +25,13 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="./Assets/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Catamaran:wght@200&family=Saira&display=swap"
+      rel="stylesheet"
+    />
   </head>
 
-  <body class=" background2">
+  <body class="background2">
     <nav class="navbar navbar-light bg-light">
       <span class="navbar-brand mb-0 h1"
         ><i class="fas fa-satellite-dish"></i
@@ -37,19 +41,21 @@
     </nav>
     <main id="starMain" class="container">
       <div class="row">
-        <div class="col-sm-12 frame">
-
+        <div class="col-12 frame"></div>
+      </div>
+      <div class="row">
+        <div class="col-12 starClick centerContent">
+          <!-- <a id="starBtn" class="marginCenter"> -->
+          <img
+            id="starBtn"
+            class="btn marginCenter"
+            src="./Assets/images/staricon.png"
+          />
+          <!-- </a> -->
         </div>
       </div>
       <div class="row">
-        <div class="col-sm-12 starClick centerContent">
-          <a id="starBtn" class="marginCenter">
-            <img class="btn" src="./Assets/images/staricon.png"/>
-          </a>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-sm-12 skymap starInfo"></div>
+        <div class="col-12 skymap starInfo"></div>
       </div>
       <!-- <button id="starBtn" class="float-left">button option 1</button> -->
     </main>
