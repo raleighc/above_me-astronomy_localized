@@ -115,12 +115,14 @@ align-items: center;
   text-align: center;
 }
 
+
 #asteroid-option,
 #satellite-option {
   display: none;
   margin: 30px;
 }
 
+.star-fade,
 .asteroid-fade,
 .satellite-fade {
     width: 100%;
@@ -174,7 +176,7 @@ align-items: center;
 }
 
 #map{
-  height: 220px;
+  height: 250px;
   width: 250px;
 }
 /* styles for sunset page */
@@ -187,7 +189,7 @@ align-items: center;
   background: rgba(0, 0, 0, 0.5);
   color: white;
   border-radius: 15px;
-  margin: auto
+  margin: auto;
   padding: 30px;
 }
 
@@ -198,3 +200,9 @@ align-items: center;
   align: center;
   vertical-align: center;
 }
+
+.welcome-screen{
+  opacity: 0.7;
+  height: auto;
+}
+
