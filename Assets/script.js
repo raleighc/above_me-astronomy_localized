@@ -43,7 +43,7 @@ console.log(coords)
     var ra = fixedRA.toString();
     
     var skyMapURL =
-      "http://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=6&ra=" +
+      "https://server1.sky-map.org/skywindow.jsp?img_source=SDSS&zoom=6&ra=" +
       ra +
       "&de=" +
       lat;

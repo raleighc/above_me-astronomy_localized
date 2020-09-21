@@ -136,6 +136,13 @@ align-items: center;
   color: rgb(155, 184, 209);
 }
 
+.jumbo{
+  border-radius: 15px;
+  margin: auto;
+  background: rgba(36, 37, 37, 0.7);
+  color: rgb(155, 184, 209);
+}
+
 #asteroid-option,
 #satellite-option {
   display: none;
