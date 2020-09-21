@@ -227,7 +227,7 @@ console.log(coords)
         
         // generate a custom icon to show as the satellite 
         var satIconFloat = L.icon({
-          iconUrl: "./assets/images/satellite-icon.png",
+          iconUrl: "./images/satellite-icon.png",
           iconSize: [50, 40],
           iconAnchor: [25, 16],
       });
