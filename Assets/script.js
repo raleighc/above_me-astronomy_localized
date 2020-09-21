@@ -9,6 +9,7 @@ console.log(coords)
   if (coords === null){
     getLocation();
   }
+  $("#start-btn").attr("href", "./sunrise.html");
 
   $(window).on("load", function () {
     $(".background1").addClass("fadein");
@@ -63,6 +64,7 @@ console.log(coords)
       .then(function (response) {
         var imageOfTheDay = response.hdurl;
         var imageEx = response.explanation;
+        console.log(response);
 
         var iotdEl = $("<img>").attr("src", imageOfTheDay).addClass("iotdSize");
         var iotdExEl = $("<p>").text(imageEx);
