@@ -3,6 +3,7 @@ $(document).ready(function () {
   var dateTime = moment().format("dddd, MMMM Do");
   var raTime = parseInt(moment().utc().format("HH"));
   var currentDay = moment().utc().format("YYYY-MM-DD");
+  var currentDayNoUTC = moment().format("YYYY-MM-DD");
   var coords = JSON.parse(localStorage.getItem("latLon"));
   $("#currentDay").text(dateTime);
 console.log(coords)
@@ -55,16 +56,17 @@ console.log(coords)
   }
   function nasaPicOfDay() {
     var astroPicURL =
-      "https://api.nasa.gov/planetary/apod?api_key=Bgi1uiAMfef2QgydlF1ezKjCgeb3OdGfrj7B87wv&date=" + currentDay;
+      "https://api.nasa.gov/planetary/apod?api_key=Bgi1uiAMfef2QgydlF1ezKjCgeb3OdGfrj7B87wv&date=" + currentDayNoUTC;
     $.ajax({
       url: astroPicURL,
       method: "GET",
     })
       // We store all of the retrieved data inside of an object called "response"
       .then(function (response) {
+        console.log(response);
         var imageOfTheDay = response.hdurl;
         var imageEx = response.explanation;
-        console.log(response);
+        
 
         var iotdEl = $("<img>").attr("src", imageOfTheDay).addClass("iotdSize");
         var iotdExEl = $("<p>").text(imageEx);
