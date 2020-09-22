@@ -35,44 +35,6 @@ p{
   height: calc(100vh - 56px) !important;
   background-attachment: fixed;
 }
-/* .background1:before {
-  content: "";
-  width: 100%;
-  height: calc(100vh - 56px) !important;
-  background: url(./images/sunrise-warm.png);
-  
-  background-size: cover;
-  opacity: 0;
-  transition: opacity 5s;
-  background-attachment: fixed;
-  position: absolute;
-  
-}
-
-.background1.fadein:before {
-  opacity: 1;
-  z-index: 0;
-}
-.background2:before {
-  content: "";
-  width: 100%;
-  height: calc(100vh - 56px) !important;
-  background: url(./images/purple-cosmos.png);
-
-  background-size: cover;
-  opacity: 0;
-  transition: opacity 5s;
-  background-attachment: fixed;
-  position: absolute;
-}
-
-.background2.fadein:before {
-  opacity: 1;
-} */
-
-
-/* font-family: 'Catamaran', sans-serif; */
-/* font-family: 'Saira', sans-serif; */
 
 .navbar{
   background-color: rgb(36, 37, 37);
@@ -111,11 +73,7 @@ align-items: center;
   float: none;
   margin: 150px;
 }
-/* #start-btn:hover{
-  background-color: whitesmoke;
-  width: 256px;
-  height: 256px;
-} */
+
 
 .footer {
   font-size: 14px;
