@@ -2,7 +2,7 @@
 
 ABOVE ME is a sleek educational tool that provides up-to-date details on a variety of satellites, asteroids and stars that are directly above the user.
 
-[Above Me Deployed Site](https://github.com/raleighc/above_me-astronomy_localized)
+[Above Me Deployed Site](https://raleighc.github.io/above_me-astronomy_localized/)
 
 ## Concept
 
